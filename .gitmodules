@@ -1,0 +1,3 @@
+[submodule "python-amazon-mws"]
+	path = python-amazon-mws
+	url = git@github.com:arbn/python-amazon-mws.git
