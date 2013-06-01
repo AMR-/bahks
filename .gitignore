@@ -5,4 +5,4 @@ venv
 local_settings.py
 bahks/settings.py
 boxmedb.db
-bahks/python-amazon-mws/*
+bahks/python-amazon-mws/
