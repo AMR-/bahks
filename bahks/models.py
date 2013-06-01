@@ -63,4 +63,4 @@ class Box(models.Model):
     def __unicodes__(self):
         return 'orderID: ',orderID,'\n','username: ',username,'\n','order date: ',
         orderDate,'\n','storage start date: ',storageStartDate,'\n','cubic feet: ',
-            cubFeet, 'weight: ', weight, 'tier: ', tier
+        cubFeet, 'weight: ', weight, 'tier: ', tier
