@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class UserInfo(models.Model):
-    username = models.ForeignKey(User, null=False)
+    username = models.OneToOneField(User, null=False)
     #userType = models.CharField(max_length=30,null=False)
    
     def __unicode__(self):
@@ -11,7 +11,7 @@ class UserInfo(models.Model):
 
 class Address(models.Model):
     username = models.ForeignKey(User, null=False)
-    streetNumber = models.CharField(max_length=10 null=False)
+    streetNumber = models.CharField(max_length=10, null=False)
     streetName = models.CharField(max_length=50, null=False)
     unit = models.CharFields(max_length=10, null=True)
     city = models.CharField(max_length=100, null=False)
