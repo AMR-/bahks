@@ -46,7 +46,7 @@ class Box(models.Model):
     status = model.CharField(max_length=10, null=True, 
                             choices = ((labled, 'Labled'),
                                 (received, 'Received'),
-                                (retrieved, 'Retrieved'))
+                                (retrieved, 'Retrieved')) )
 
     def calculateFee(self):
         """
