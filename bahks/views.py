@@ -15,6 +15,7 @@ def signup(request):
         form = forms.UserForm(request.POST)
         if form.is_valid():
             user = User.objects.create_user(request.POST['username'], request.POST['email'], request.POST['password'])
+            user = authenticate(username=request.POST['username'], password=request.POST['password'])
             login(request, user)
             return redirect('/storage')
         else:

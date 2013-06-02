@@ -4,6 +4,7 @@ https://pypi.python.org/pypi/ClassicUPS
 """
 
 from ClassicUPS.ups import UPSConnection
+import credentials
 
 ups = UPSConnection(license_number=credentials.ups_access_key, 
     user_id='bahksme', password=credentials.ups_password, 
@@ -13,12 +14,11 @@ ups = UPSConnection(license_number=credentials.ups_access_key,
 # helper method for set_up_shipment
 def create_shipment(from_addr, to_addr, dimensions, weight, shipping_service):
     shipment = ups.create_shipment(from_addr, to_addr, dimensions, weight, 
-        file_format='GIF', shipping_service)
+                                   shipping_service, file_format='GIF')
     return shipment
 
 # returns a shipment object
 # service options are: '1dayair','2dayair','ground',worldwide_expedited'
-    }
 def set_up_shipment(from_name, from_street_address, from_city, 
     from_state, from_country, from_zip, from_phone, to_name, 
     to_street_address, to_city, to_state, to_country, 
@@ -51,7 +51,7 @@ def set_up_shipment(from_name, from_street_address, from_city,
 
 # creates a shipping label gif (saves it in root?)
 def save_label(shipment):
-    return shipment.save_label(open('label.gif', 'wb'))
+    return shipment.save_label(open('./tmp/label.gif', 'wb'))
 
 def get_cost(shipment):
     return shipment.cost()
