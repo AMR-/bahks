@@ -25,8 +25,8 @@ from requests.exceptions import HTTPError
 
 class MWSError(Exception):
     """
-        Main MWS Exception class
-    """
+Main MWS Exception class
+"""
     # Allows quick access to the response object.
     # Do not rely on this attribute, always check if its not None.
     response = None
@@ -34,7 +34,7 @@ class MWSError(Exception):
 
 def calc_md5(string):
     """Calculates the MD5 encryption for the given string
-    """
+"""
     md = hashlib.md5()
     md.update(string)
     return base64.encodestring(md.digest()).strip('\n')
@@ -42,9 +42,9 @@ def calc_md5(string):
 
 def remove_empty(d):
     """
-        Helper function that removes all keys from a dictionary (d),
-        that have an empty value.
-    """
+Helper function that removes all keys from a dictionary (d),
+that have an empty value.
+"""
     for key in d.keys():
         if not d[key]:
             del d[key]
@@ -74,8 +74,8 @@ class DictWrapper(object):
 
 class DataWrapper(object):
     """
-        Text wrapper in charge of validating the hash sent by Amazon.
-    """
+Text wrapper in charge of validating the hash sent by Amazon.
+"""
     def __init__(self, data, header):
         self.original = data
         if 'content-md5' in header:
@@ -126,7 +126,7 @@ class MWS(object):
 
     def make_request(self, extra_data, method="GET", **kwargs):
         """Make request to Amazon MWS API with these parameters
-        """
+"""
 
         # Remove all keys with an empty value because
         # Amazon's MWS does not allow such a thing.
@@ -142,10 +142,6 @@ class MWS(object):
         }
         params.update(extra_data)
         request_description = '&'.join(['%s=%s' % (k, urllib.quote(params[k], safe='-_.~').encode('utf-8')) for k in sorted(params)])
-<<<<<<< HEAD
-        print(request_description)
-=======
->>>>>>> a0b37c603cfb929e323742efaddb49f847bb9d11
         signature = self.calc_signature(method, request_description)
         url = '%s%s?%s&Signature=%s' % (self.domain, self.uri, request_description, urllib.quote(signature))
         headers = {'User-Agent': 'python-amazon-mws/0.0.1 (Language=Python)'}
@@ -181,37 +177,37 @@ class MWS(object):
 
     def get_service_status(self):
         """
-            Returns a GREEN, GREEN_I, YELLOW or RED status.
-            Depending on the status/availability of the API its being called from.
-        """
+Returns a GREEN, GREEN_I, YELLOW or RED status.
+Depending on the status/availability of the API its being called from.
+"""
 
         return self.make_request(extra_data=dict(Action='GetServiceStatus'))
 
     def calc_signature(self, method, request_description):
         """Calculate MWS signature to interface with Amazon
-        """
+"""
         sig_data = method + '\n' + self.domain.replace('https://', '').lower() + '\n' + self.uri + '\n' + request_description
         return base64.b64encode(hmac.new(str(self.secret_key), sig_data, hashlib.sha256).digest())
 
     def get_timestamp(self):
         """
-            Returns the current timestamp in proper format.
-        """
+Returns the current timestamp in proper format.
+"""
         return strftime("%Y-%m-%dT%H:%M:%SZ", gmtime())
 
     def enumerate_param(self, param, values):
         """
-            Builds a dictionary of an enumerated parameter.
-            Takes any iterable and returns a dictionary.
-            ie.
-            enumerate_param('MarketplaceIdList.Id', (123, 345, 4343))
-            returns
-            {
-                MarketplaceIdList.Id.1: 123,
-                MarketplaceIdList.Id.2: 345,
-                MarketplaceIdList.Id.3: 4343
-            }
-        """
+Builds a dictionary of an enumerated parameter.
+Takes any iterable and returns a dictionary.
+ie.
+enumerate_param('MarketplaceIdList.Id', (123, 345, 4343))
+returns
+{
+MarketplaceIdList.Id.1: 123,
+MarketplaceIdList.Id.2: 345,
+MarketplaceIdList.Id.3: 4343
+}
+"""
         params = {}
         if values is not None:
             if not param.endswith('.'):
@@ -229,9 +225,9 @@ class Feeds(MWS):
     def submit_feed(self, feed, feed_type, marketplaceids=None,
                     content_type="text/xml", purge='false'):
         """
-        Uploads a feed ( xml or .tsv ) to the seller's inventory.
-        Can be used for creating/updating products on Amazon.
-        """
+Uploads a feed ( xml or .tsv ) to the seller's inventory.
+Can be used for creating/updating products on Amazon.
+"""
         data = dict(Action='SubmitFeed',
                     FeedType=feed_type,
                     PurgeAndReplace=purge)
@@ -243,9 +239,9 @@ class Feeds(MWS):
     def get_feed_submission_list(self, feedids=None, max_count=None, feedtypes=None,
                                     processingstatuses=None, fromdate=None, todate=None):
         """
-        Returns a list of all feed submissions submitted in the previous 90 days.
-        That match the query parameters.
-        """
+Returns a list of all feed submissions submitted in the previous 90 days.
+That match the query parameters.
+"""
 
         data = dict(Action='GetFeedSubmissionList',
                     MaxCount=max_count,
@@ -413,10 +409,10 @@ class Products(MWS):
 
     def list_matching_products(self, marketplaceid, query, contextid=None):
         """ Returns a list of products and their attributes, ordered by
-            relevancy, based on a search query that you specify.
-            Your search query can be a phrase that describes the product
-            or it can be a product identifier such as a UPC, EAN, ISBN, or JAN.
-        """
+relevancy, based on a search query that you specify.
+Your search query can be a phrase that describes the product
+or it can be a product identifier such as a UPC, EAN, ISBN, or JAN.
+"""
         data = dict(Action='ListMatchingProducts',
                     MarketplaceId=marketplaceid,
                     Query=query,
@@ -425,17 +421,17 @@ class Products(MWS):
 
     def get_matching_product(self, marketplaceid, asins):
         """ Returns a list of products and their attributes, based on a list of
-            ASIN values that you specify.
-        """
+ASIN values that you specify.
+"""
         data = dict(Action='GetMatchingProduct', MarketplaceId=marketplaceid)
         data.update(self.enumerate_param('ASINList.ASIN.', asins))
         return self.make_request(data)
 
     def get_matching_product_for_id(self, marketplaceid, type, id):
         """ Returns a list of products and their attributes, based on a list of
-            product identifier values (asin, sellersku, upc, ean, isbn and JAN)
-            Added in Fourth Release, API version 2011-10-01
-        """
+product identifier values (asin, sellersku, upc, ean, isbn and JAN)
+Added in Fourth Release, API version 2011-10-01
+"""
         data = dict(Action='GetMatchingProductForId',
                     MarketplaceId=marketplaceid,
                     IdType=type)
@@ -444,16 +440,16 @@ class Products(MWS):
 
     def get_competitive_pricing_for_sku(self, marketplaceid, skus):
         """ Returns the current competitive pricing of a product,
-            based on the SellerSKU and MarketplaceId that you specify.
-        """
+based on the SellerSKU and MarketplaceId that you specify.
+"""
         data = dict(Action='GetCompetitivePricingForSKU', MarketplaceId=marketplaceid)
         data.update(self.enumerate_param('SellerSKUList.SellerSKU.', skus))
         return self.make_request(data)
 
     def get_competitive_pricing_for_asin(self, marketplaceid, asins):
         """ Returns the current competitive pricing of a product,
-            based on the ASIN and MarketplaceId that you specify.
-        """
+based on the ASIN and MarketplaceId that you specify.
+"""
         data = dict(Action='GetCompetitivePricingForASIN', MarketplaceId=marketplaceid)
         data.update(self.enumerate_param('ASINList.ASIN.', asins))
         return self.make_request(data)
@@ -510,19 +506,19 @@ class Sellers(MWS):
 
     def list_marketplace_participations(self):
         """
-            Returns a list of marketplaces a seller can participate in and
-            a list of participations that include seller-specific information in that marketplace.
-            The operation returns only those marketplaces where the seller's account is in an active state.
-        """
+Returns a list of marketplaces a seller can participate in and
+a list of participations that include seller-specific information in that marketplace.
+The operation returns only those marketplaces where the seller's account is in an active state.
+"""
 
         data = dict(Action='ListMarketplaceParticipations')
         return self.make_request(data)
 
     def list_marketplace_participations_by_next_token(self, token):
         """
-            Takes a "NextToken" and returns the same information as "list_marketplace_participations".
-            Based on the "NextToken".
-        """
+Takes a "NextToken" and returns the same information as "list_marketplace_participations".
+Based on the "NextToken".
+"""
         data = dict(Action='ListMarketplaceParticipations', NextToken=token)
         return self.make_request(data)
 
@@ -534,23 +530,14 @@ class InboundShipments(MWS):
     URI = "/FulfillmentInboundShipment/2010-10-01"
     VERSION = '2010-10-01'
 
-<<<<<<< HEAD
-    def create_inbound_shipment_plan(self, name, address, city, state, postalCode,
-                                     countryCode, sellerSKU, ASIN, labelPrepPreference=None):
-        data = {'Action' : 'CreateInboundShipmentPlan',
-                'LabelPrepPreference' : labelPrepPreference,
-                'ShipFromAddress.Name' : name,
-                'ShipFromAddress.AddressLine1' : address,
-=======
-    def create_inbound_shipment_plan(self, name, addressLine1, addressLine2, 
-                                    city, state, postalCode, countryCode, 
+    def create_inbound_shipment_plan(self, name, addressLine1, addressLine2,
+                                    city, state, postalCode, countryCode,
                                     sellerSKU, ASIN, labelPrepPreference=None):
         data = {'Action' : 'CreateInboundShipmentPlan',
                 'LabelPrepPreference' : labelPrepPreference,
                 'ShipFromAddress.Name' : name,
                 'ShipFromAddress.AddressLine1' : addressLine1,
-             #   'ShipFromAddress.AddressLine2' : addressLine2,
->>>>>>> a0b37c603cfb929e323742efaddb49f847bb9d11
+             # 'ShipFromAddress.AddressLine2' : addressLine2,
                 'ShipFromAddress.City' : city,
                 'ShipFromAddress.StateOrProvinceCode' : state,
                 'ShipFromAddress.PostalCode' : postalCode,
@@ -559,11 +546,9 @@ class InboundShipments(MWS):
                 'InboundShipmentPlanRequestItems.member.1.ASIN' : ASIN
             }
         return self.make_request(data, "POST")
-<<<<<<< HEAD
-=======
 
     def create_inbound_shipment(self, shipmentId,
-                                name,  addressLine1, city,
+                                name, addressLine1, city,
                                 state, zipCode, country, fulfillmentCenterId, labelType,
                                 sellerSKU, quantityShipped):
         data = {'Action': 'CreateInboundShipment',
@@ -574,7 +559,7 @@ class InboundShipments(MWS):
             'InboundShipmentHeader.ShipmentName': 'test',
             'InboundShipmentHeader.ShipFromAddress.Name': name,
             'InboundShipmentHeader.ShipFromAddress.AddressLine1': addressLine1,
-       #     'InboundShipmentHeader.ShipFromAddress.AddressLine2' = addressLine2,
+       # 'InboundShipmentHeader.ShipFromAddress.AddressLine2' = addressLine2,
             'InboundShipmentHeader.ShipFromAddress.City': city,
             'InboundShipmentHeader.ShipFromAddress.StateOrProvinceCode': state,
             'InboundShipmentHeader.ShipFromAddress.PostalCode': zipCode,
@@ -583,7 +568,6 @@ class InboundShipments(MWS):
             'InboundShipmentItems.member.1.QuantityShipped': quantityShipped
         }
         return self.make_request(data, "POST")
->>>>>>> a0b37c603cfb929e323742efaddb49f847bb9d11
         
 
 class Inventory(MWS):
@@ -624,9 +608,9 @@ class Recommendations(MWS):
 
     def get_last_updated_time_for_recommendations(self, marketplaceid):
         """
-        Checks whether there are active recommendations for each category for the given marketplace, and if there are,
-        returns the time when recommendations were last updated for each category.
-        """
+Checks whether there are active recommendations for each category for the given marketplace, and if there are,
+returns the time when recommendations were last updated for each category.
+"""
 
         data = dict(Action='GetLastUpdatedTimeForRecommendations',
                     MarketplaceId=marketplaceid)
@@ -634,8 +618,8 @@ class Recommendations(MWS):
 
     def list_recommendations(self, marketplaceid, recommendationcategory=None):
         """
-        Returns your active recommendations for a specific category or for all categories for a specific marketplace.
-        """
+Returns your active recommendations for a specific category or for all categories for a specific marketplace.
+"""
 
         data = dict(Action="ListRecommendations",
                     MarketplaceId=marketplaceid,
@@ -644,8 +628,8 @@ class Recommendations(MWS):
 
     def list_recommendations_by_next_token(self, token):
         """
-        Returns the next page of recommendations using the NextToken parameter.
-        """
+Returns the next page of recommendations using the NextToken parameter.
+"""
 
         data = dict(Action="ListRecommendationsByNextToken",
                     NextToken=token)
