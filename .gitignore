@@ -6,3 +6,5 @@ local_settings.py
 bahks/settings.py
 boxmedb.db
 bahks/python-amazon-mws/
+credentials.py
+.DS_store
