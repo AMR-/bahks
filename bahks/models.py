@@ -24,7 +24,7 @@ class Address(models.Model):
         self.unit, '\n', self.city, ', ', self.state, ' ', self.zipCode
 
 class Box(models.Model):
-    orderID = models.AutoField(primary_key=True)
+    boxID = models.AutoField(primary_key=True)
     username = models.ForeignKey(User, null=False)
     # how do we associate with a warehouse time?
     length = models.DecimalField(max_digits= 6, decimal_places=2, null=True)
