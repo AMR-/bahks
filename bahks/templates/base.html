@@ -5,12 +5,15 @@
     <title>bahks.me</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    {% bootstrap_stylesheet_tag %}
-    {% bootstrap_stylesheet_tag "responsive" %}
+    <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+    <link rel="stylesheet" href="media/fancybox/jquery.fancybox.css" type="text/css" media="screen" />
+    <script type="text/javascript" src="media/fancybox/jquery.fancybox.pack.js"></script>
+    <link href="media/css/bootstrap-responsive.css" rel="stylesheet">
+    <link href="media/css/bootstrap.css" rel="stylesheet">
     <link href="media/css/eliseo.css" rel="stylesheet">
-    
     <link href='http://fonts.googleapis.com/css?family=Lato:400,300,700,700italic' rel='stylesheet' type='text/css'>
+    {% block header %}
+    {% endblock %}
 </head>
 <body class="container-fluid">
   <div class="container">

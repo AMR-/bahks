@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.db import models
 from django.contrib.auth.models import User
+import models
 import forms
 
 def index(request):
@@ -24,7 +25,8 @@ def signup(request):
 
 @login_required(login_url='/login')
 def boxes(request):
-    return render(request, 'boxes.html')
+    boxes = models.Box.objects.filter(username=request.user)
+    return render(request, 'boxes.html', {'boxes' : boxes})
 
 def loginView(request):
     if request.method == 'POST':
@@ -38,3 +40,9 @@ def loginView(request):
     else:
         form = forms.LoginForm()
         return render(request, 'login.html', {'form': form})
+
+def send(request):
+    if request.method == 'POST':
+        pass
+    else:
+        return render(request, 'send.html')
