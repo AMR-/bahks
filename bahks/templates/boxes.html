@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load bootstrap_toolkit %}
+
+{% block header %}
+<script src="media/boxes.js"></script>
+{% endblock %}
+
+{% block navbar %}
+<li><a href="/">Home</a></li>
+<li><a href="pricing">Pricing</a></li>
+<li><a href="storage">Storage</a></li>
+<li><a href="account">Account</a></li>
+{% endblock %}
+
+{% block content %}
+
+<button class="fbox btn btn-primary" data-fancybox-type="iframe" href="/send"> Send a box</button>
+
+<table class="table">
+{% for box in boxes %}
+<tr>
+<td> {{box.orderDate}}</td> <td>{{ box.status}}</td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}
