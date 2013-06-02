@@ -9,14 +9,13 @@ class UserInfo(models.Model):
         return self.username
 
 class Address(models.Model):
+    addressId = models.AutoField(primary_key=True)
     username = models.ForeignKey(User, null=False)
-    streetNumber = models.CharField(max_length=10, null=False)
-    streetName = models.CharField(max_length=50, null=False)
-    unit = models.CharField(max_length=10, null=True)
+    street = models.CharField(max_length=999, null=False)
     city = models.CharField(max_length=100, null=False)
     state = models.CharField(max_length=3, null=False)
     zipCode = models.CharField(max_length=15, null=False)
-    country = models.CharField(max_length=20, null=True)
+    country = models.CharField(max_length=20, null=False)
     isDefault = models.BooleanField()
 
     def __unicode__(self):
