@@ -6,6 +6,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import models
 import forms
+#from PIL import Image
 
 def index(request):
     return render(request, 'index.html')
@@ -67,3 +68,13 @@ def account(request):
 def retrieve(request, boxId):
     models.Box.objects.filter(orderID=boxId).delete()
     return redirect('/storage')
+
+def serveImage(request):
+    #image = 
+
+    response = HttpResponse(mimetype="image/png")
+    image.save(response, "PNG")
+    return response
+
+def pricing(request):
+    return render(request, 'pricing.html')
