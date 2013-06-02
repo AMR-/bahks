@@ -15,6 +15,7 @@ def signup(request):
         form = forms.UserForm(request.POST)
         if form.is_valid():
             user = User.objects.create_user(request.POST['username'], request.POST['email'], request.POST['password'])
+            user = authenticate(username=request.POST['username'], password=request.POST['password'])
             login(request, user)
             return redirect('/storage')
         else:
@@ -26,6 +27,10 @@ def signup(request):
 def boxes(request):
     boxes = models.Box.objects.filter(username=request.user)
     return render(request, 'boxes.html', {'boxes' : boxes})
+
+#def addresses(request):
+#    addresses = models.Address.objects.filter(username=request.user)
+#    return render(request, '', {'addresses' : addresses})
 
 def loginView(request):
     if request.method == 'POST':
