@@ -8,4 +8,4 @@ boxmedb.db
 bahks/python-amazon-mws/
 bahks/python_amazon_mws/
 credentials.py
-.DS_store
+.DS_storeRakefile
