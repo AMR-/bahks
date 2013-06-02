@@ -5,6 +5,8 @@ https://pypi.python.org/pypi/ClassicUPS
 
 from ClassicUPS.ups import UPSConnection
 import credentials
+from binascii import a2b_base64
+import StringIO
 
 from PIL import Image
 
@@ -66,12 +68,13 @@ def create_shipment(from_addr, to_addr, dimensions, weight, shipping_service):
 
 # creates a shipping label gif (saves it in root?)
 def save_label(shipment):
-    return shipment.save_label(open('label.gif', 'wb'))
+    return shipment.save_label(open('/tmp/label.gif', 'wb'))
 
 def get_image_object(shipment):
-    raw_epl = shipment.accept_result.dict_response['ShipmentAcceptResponse']
-    ['ShipmentResults']['PackageResults']['LabelImage']['GraphicImage']
-    image = Image.fromstring("RGBA",(70,40),raw_epl)
+    raw_epl = shipment.accept_result.dict_response['ShipmentAcceptResponse']['ShipmentResults']['PackageResults']['LabelImage']['GraphicImage']
+    binary = a2b_base64(raw_epl)
+    s.write(binary)
+    image = Image.fromstring("RGBA",(100,50),s.getvalue())
     return image
 
 def get_cost(shipment):

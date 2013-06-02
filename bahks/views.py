@@ -53,7 +53,11 @@ def send(request):
         box.username = request.user
         box.status = 'Labeled'
         box.save()
-        return redirect('/image')
+        shipment = ups.set_up_shipment("Austin Robinson", "1250 Ocean Avenue", "Brooklyn", "NY", "US", "11230",
+                    "9198891172", "Bill Mandy", "399 Smith Street", "Brooklyn", "NY", "US", "11231", "9198891172",
+                    ".1", ".1", ".1", ".1")
+        ups.save_label(shipment)
+        return render(request, 'done_sending.html')
     else:
         return render(request, 'send.html')
 
@@ -75,13 +79,8 @@ def retrieve(request, boxId):
     return redirect('/storage')
 
 def serveImage(request):
-    shipment = ups.setup_shipment("Austin Robinson", "1250 Ocean Avenue", "Brooklyn", "NY", "US", "11230",
-                   "9198891172", "399 Smith Street", "Brooklyn", "NY", "US", "11231", "9198891172",
-                   ".1", ".1", ".1", ".1")
-    image = ups.get_image_object(shipment)
-
-    response = HttpResponse(mimetype="image/png")
-    image.save(response, "PNG")
+    response = HttpResponse(mimetype="image/gif")
+    image.save(response, "GIF")
     return response
 
 def pricing(request):
