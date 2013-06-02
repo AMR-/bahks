@@ -1,5 +1,6 @@
 ClassicUPS==0.1.4
 Django==1.5.1
+PIL==1.1.7
 dict2xml==1.0
 distribute==0.6.34
 dj-database-url==0.2.1
