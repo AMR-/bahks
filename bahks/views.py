@@ -28,6 +28,10 @@ def boxes(request):
     boxes = models.Box.objects.filter(username=request.user)
     return render(request, 'boxes.html', {'boxes' : boxes})
 
+#def addresses(request):
+#    addresses = models.Address.objects.filter(username=request.user)
+#    return render(request, '', {'addresses' : addresses})
+
 def loginView(request):
     if request.method == 'POST':
         form = forms.LoginForm(request.POST)

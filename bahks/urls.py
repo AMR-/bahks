@@ -10,6 +10,7 @@ urlpatterns = patterns(
     url(r'^$', 'bahks.views.index'),
     url(r'^signup$', 'bahks.views.signup'),
     url(r'^storage$', 'bahks.views.boxes'),
+    url(r'^addresses$', 'bahks.views.addresses'),
     url(r'^login$', 'bahks.views.loginView'),
     url(r'^send$', 'bahks.views.send'),
     url(r'^account$', 'bahks.views.account'),
