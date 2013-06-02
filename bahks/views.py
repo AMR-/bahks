@@ -6,6 +6,7 @@ from django.db import models
 from django.contrib.auth.models import User
 import models
 import forms
+import ups
 #from PIL import Image
 
 def index(request):
@@ -52,7 +53,7 @@ def send(request):
         box.username = request.user
         box.status = 'Labeled'
         box.save()
-        return render(request, 'done_sending.html')
+        return redirect('/image')
     else:
         return render(request, 'send.html')
 
@@ -74,7 +75,10 @@ def retrieve(request, boxId):
     return redirect('/storage')
 
 def serveImage(request):
-    #image = 
+    shipment = ups.setup_shipment("Austin Robinson", "1250 Ocean Avenue", "Brooklyn", "NY", "US", "11230",
+                   "9198891172", "399 Smith Street", "Brooklyn", "NY", "US", "11231", "9198891172",
+                   ".1", ".1", ".1", ".1")
+    image = ups.get_image_object(shipment)
 
     response = HttpResponse(mimetype="image/png")
     image.save(response, "PNG")
