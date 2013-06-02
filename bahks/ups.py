@@ -10,11 +10,19 @@ ups = UPSConnection(license_number=credentials.ups_access_key,
     shipper_number=credentials.ups_account_number)
 
 
-# returns three dictionaries: from_addr, to_addr, dimensions
+# helper method for set_up_shipment
+def create_shipment(from_addr, to_addr, dimensions, weight, shipping_service):
+    shipment = ups.create_shipment(from_addr, to_addr, dimensions, weight, 
+        file_format='GIF', shipping_service)
+    return shipment
+
+# returns a shipment object
+# service options are: '1dayair','2dayair','ground',worldwide_expedited'
+    }
 def set_up_shipment(from_name, from_street_address, from_city, 
     from_state, from_country, from_zip, from_phone, to_name, 
     to_street_address, to_city, to_state, to_country, 
-    to_zip, to_phone, length, width, height):
+    to_zip, to_phone, length, width, height, weight, service='ground'):
     from_addr = {
         'name': from_name,
         'address1': from_addr,
@@ -38,13 +46,15 @@ def set_up_shipment(from_name, from_street_address, from_city,
         'width': width,
         'height': height
     }
-    return from_addr, to_addr, dimensions
-
-# use this to create a shipment object
-def create_shipment(from_addr, to_addr, dimensions, weight):
-    shipment = ups.create_shipment(from_addr, to_addr, dimensions, weight, file_format='GIF')
+    shipment = create_shipment(from_addr, to_addr, dimensions, shipping_service)
     return shipment
 
 # creates a shipping label gif (saves it in root?)
 def save_label(shipment):
-    shipment.save_label(open('label.gif', 'wb'))
+    return shipment.save_label(open('label.gif', 'wb'))
+
+def get_cost(shipment):
+    return shipment.cost()
+
+def get_tracking_number(shipment):
+    return shipment.tracking_number()
