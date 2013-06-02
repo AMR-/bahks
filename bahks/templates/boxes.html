@@ -8,7 +8,7 @@
 {% block navbar %}
 <li><a href="/">Home</a></li>
 <li><a href="pricing">Pricing</a></li>
-<li><a href="storage">Storage</a></li>
+<li class="active"><a href="storage">Storage</a></li>
 <li><a href="account">Account</a></li>
 {% endblock %}
 
@@ -17,6 +17,9 @@
 <button class="fbox btn btn-primary" data-fancybox-type="iframe" href="/send"> Send a box</button>
 
 <table class="table">
+<tr>
+<td> <b>Order Date</b> </td> <td> <b>Status</b> </td>
+</tr>
 {% for box in boxes %}
 <tr>
 <td> {{box.orderDate}}</td> <td>{{ box.status}}</td>
