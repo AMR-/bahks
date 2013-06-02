@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.db import models
@@ -23,7 +23,6 @@ def signup(request):
         form = forms.UserForm()
         return render(request, 'signup.html', {'form': form})
 
-@login_required(login_url='/login')
 def boxes(request):
     boxes = models.Box.objects.filter(username=request.user)
     return render(request, 'boxes.html', {'boxes' : boxes})
@@ -43,6 +42,23 @@ def loginView(request):
 
 def send(request):
     if request.method == 'POST':
-        pass
+        box = models.Box()
+        box.username = request.user
+        box.status = 'Labeled'
+        box.save()
+        return HttpResponse('')
     else:
         return render(request, 'send.html')
+
+@login_required(login_url='/login')
+def account(request):
+    if request.method == 'POST':
+        form = forms.UserForm(request.POST)
+        if form.is_valid():
+            up = form.save()
+            up.user = request.user
+            up.save()
+            return redirect('/storage')
+    else:
+        form = forms.UserForm(instance=request.user)
+        return render(request, 'account.html', {'form': form})

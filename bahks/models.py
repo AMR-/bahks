@@ -39,11 +39,11 @@ class Box(models.Model):
     tier = models.CharField(max_length=7, null=True,
                             choices = ((tier1, 'Tier 1'), 
                                 (tier2, 'Tier 2')) )
-    labled = 'Labeled'
+    labeled = 'Labeled'
     received = 'Received'
     retrieved = 'Retrieved'
     status = models.CharField(max_length=10, null=True, 
-                            choices = ((labled, 'Labled'),
+                            choices = ((labeled, 'Labeled'),
                                 (received, 'Received'),
                                 (retrieved, 'Retrieved')) )
 
