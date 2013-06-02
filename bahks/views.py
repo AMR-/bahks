@@ -46,7 +46,7 @@ def send(request):
         box.username = request.user
         box.status = 'Labeled'
         box.save()
-        return HttpResponse('')
+        return render(request, 'done_sending.html')
     else:
         return render(request, 'send.html')
 
@@ -62,3 +62,7 @@ def account(request):
     else:
         form = forms.UserForm(instance=request.user)
         return render(request, 'account.html', {'form': form})
+
+def retrieve(request, boxId):
+    models.Box.objects.filter(orderID=boxId).delete()
+    return redirect('/storage')

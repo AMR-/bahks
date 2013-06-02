@@ -13,6 +13,7 @@ urlpatterns = patterns(
     url(r'^login$', 'bahks.views.loginView'),
     url(r'^send$', 'bahks.views.send'),
     url(r'^account$', 'bahks.views.account'),
+    url(r'^retrieve/(\d+)$', 'bahks.views.retrieve'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),

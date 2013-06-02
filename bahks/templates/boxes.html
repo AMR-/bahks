@@ -22,7 +22,7 @@
 </tr>
 {% for box in boxes %}
 <tr>
-<td> {{box.orderDate}}</td> <td>{{ box.status}}</td>
+<td> {{box.orderDate}}</td> <td>{{ box.status}}</td> <td> <a href="/retrieve/{{box.orderID}}"><button class="btn btn-primary">Retrieve</button></a>
 </tr>
 {% endfor %}
 </table>
