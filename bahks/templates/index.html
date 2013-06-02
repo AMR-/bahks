@@ -1,80 +1,67 @@
-<!DOCTYPE html>
+{% extends 'base.html' %}
 {% load bootstrap_toolkit %}
-<html lang="en">
-<head>
-	<title>bahks.me</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	
-	{% bootstrap_stylesheet_tag %}
-	{% bootstrap_stylesheet_tag "responsive" %}
-	<link href="media/css/eliseo.css" rel="stylesheet">
-	
-	<link href='http://fonts.googleapis.com/css?family=Lato:400,300,700,700italic' rel='stylesheet' type='text/css'>
-	
-	<!-- HTML5 shim, for IE6, IE7 and IE8 support of HTML5 elements -->
-	<!--[if lt IE 9]>
-	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-</head>
-<body>
-	<div class="container">
-		<nav class="navbar">
-			<ul class="nav">
-				<li class="active"><a href="#">Home</a></li>
-				<li><a href="pricing">Pricing</a></li>
-				<li><a href="signup">Sign Up</a></li>
-				<li><a href="login">Log In</a></li>
-			</ul>
-		</nav> <!-- /nav -->
 
-		<div class="row">
-			<div class="span12">
-				<h2>bahks.me</h2>
-			</div>
-			<div class="span12">
-				<h3 class="subtitle"><strong>Easy storage for valuable containers.</strong></h3>
-			</div>
-		</div>
+{% block navbar %}
+<li class="active"><a href="#">Home</a></li>
+<li><a href="pricing">Pricing</a></li>
+<li><a href="signup">Sign Up</a></li>
+<li><a href="login">Log In</a></li>
+{% endblock %}
+  
+{% block content %}
+  <div class="row">
+    <div class="span12">
+      <h2>bahks.me</h2>
+    </div>
+    <div class="span12">
+      <h3 class="subtitle"><strong>Easy storage for valuable containers.</strong></h3>
+    </div>
+  </div>
 		
-		<div class="row">
-			<div class="span12">
-				<h2><img src="/media/images/box.png" alt="graph"/></h2>
-			</div>
-		</div>
+  <div class="row">
+    <div class="span12">
+      <h2><img src="/media/images/box.png" alt="graph"/></h2>
+    </div>
+  </div>
 
-		<div class="row">
-			<div class="span12 center separator">
-				<h2>Keep boxes out of the trash.</h2>
-			</div>
-		</div>
+  <div class="row">
+    <div class="span12 center separator">
+      <h2>Keep boxes out of the trash.</h2>
+    </div>
+  </div>
 
-		<!-- features -->
-		<div class="row">
-			<div class="feature-section">
-				<div class="feature-item">
-					<h4>Extremely simple.</strong></h4>
-					<div class="feature-detail">
-						<p>Just package your boxes using our provided shipping label, and send them on their way. They'll be available when you need them.</p>
-					</div> <!-- /feature-detail -->
-				</div> <!-- /feature-item -->
-
-				<div class="feature-item">
-					<h4>Keep your merchandise valuable.</h4>
-					<div class="feature-detail">
-						<p>By storing old containers with bahks.me, you keep the resell value high for all your possessions.</p>
-					</div> <!-- /feature-detail -->
-				</div> <!-- /feature-item -->
+  <!-- features -->
+  <div class="row">
+      <div class="feature-section">
+	<div class="feature-item">
+	  <h4>
+	    Extremely simple.
+	  </h4>
+	  <div class="feature-detail">
+	    <p>Just package your boxes using our provided shipping label, and send them on their way. They'll be available when you need them. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris adipiscing tempor erat placerat sollicitudin. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+</p>
+	  </div> <!-- /feature-detail -->
+	</div> <!-- /feature-item -->
 	
-				<div class="feature-item">
-					<h4>Pay by the month.</h4>
-					<div class="feature-detail">
-						<p>Our pricing is sensible. You just pay a low monthly fee semi-anually for every box you store.</p>
-					</div> <!-- /feature-detail -->
-				</div> <!-- /feature-item -->
-			</div> <!-- /feature-section -->
-		</div> <!-- /row -->
-	</div> <!-- /container -->
+	<div class="feature-item">
+	  <h4>Keep your merchandise valuable.</h4>
+	  <div class="feature-detail">
+	    <p>By storing old containers with bahks.me, you keep the resell value high for all your possessions. 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris adipiscing tempor erat placerat sollicitudin. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+</p>
+	  </div> <!-- /feature-detail -->
+	</div> <!-- /feature-item -->
 	
-</body>
-</html>
+	<div class="feature-item">
+	  <h4>Pay by the month.</h4>
+	  <div class="feature-detail">
+	    <p>Our pricing is sensible. You just pay a low monthly fee semi-anually for every box you store.
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris adipiscing tempor erat placerat sollicitudin. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.
+</p>
+	  </div> <!-- /feature-detail -->
+	</div> <!-- /feature-item -->
+      </div> <!-- /feature-section -->
+  </div> <!-- /row -->
+  {% endblock %}
+    

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load bootstrap_toolkit %}
+<html lang="en">
+  <head>
+    <title>bahks.me</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    {% bootstrap_stylesheet_tag %}
+    {% bootstrap_stylesheet_tag "responsive" %}
+    <link href="media/css/eliseo.css" rel="stylesheet">
+    
+    <link href='http://fonts.googleapis.com/css?family=Lato:400,300,700,700italic' rel='stylesheet' type='text/css'>
+</head>
+<body class="container-fluid">
+  <div class="container">
+    <nav class="navbar">
+      <ul class="nav">
+	{% block navbar %}
+	{% endblock %}
+      </ul>
+    </nav> 
+    {% block content %}
+    {% endblock %}
+  </div>
+</body>
+</html>

@@ -9,6 +9,8 @@ urlpatterns = patterns(
     '',
     url(r'^$', 'bahks.views.index'),
     url(r'^signup$', 'bahks.views.signup'),
+    url(r'^storage$', 'bahks.views.boxes'),
+    url(r'^login$', 'bahks.views.loginView'),
 
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
