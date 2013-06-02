@@ -142,7 +142,10 @@ class MWS(object):
         }
         params.update(extra_data)
         request_description = '&'.join(['%s=%s' % (k, urllib.quote(params[k], safe='-_.~').encode('utf-8')) for k in sorted(params)])
+<<<<<<< HEAD
         print(request_description)
+=======
+>>>>>>> a0b37c603cfb929e323742efaddb49f847bb9d11
         signature = self.calc_signature(method, request_description)
         url = '%s%s?%s&Signature=%s' % (self.domain, self.uri, request_description, urllib.quote(signature))
         headers = {'User-Agent': 'python-amazon-mws/0.0.1 (Language=Python)'}
@@ -531,12 +534,23 @@ class InboundShipments(MWS):
     URI = "/FulfillmentInboundShipment/2010-10-01"
     VERSION = '2010-10-01'
 
+<<<<<<< HEAD
     def create_inbound_shipment_plan(self, name, address, city, state, postalCode,
                                      countryCode, sellerSKU, ASIN, labelPrepPreference=None):
         data = {'Action' : 'CreateInboundShipmentPlan',
                 'LabelPrepPreference' : labelPrepPreference,
                 'ShipFromAddress.Name' : name,
                 'ShipFromAddress.AddressLine1' : address,
+=======
+    def create_inbound_shipment_plan(self, name, addressLine1, addressLine2, 
+                                    city, state, postalCode, countryCode, 
+                                    sellerSKU, ASIN, labelPrepPreference=None):
+        data = {'Action' : 'CreateInboundShipmentPlan',
+                'LabelPrepPreference' : labelPrepPreference,
+                'ShipFromAddress.Name' : name,
+                'ShipFromAddress.AddressLine1' : addressLine1,
+             #   'ShipFromAddress.AddressLine2' : addressLine2,
+>>>>>>> a0b37c603cfb929e323742efaddb49f847bb9d11
                 'ShipFromAddress.City' : city,
                 'ShipFromAddress.StateOrProvinceCode' : state,
                 'ShipFromAddress.PostalCode' : postalCode,
@@ -545,6 +559,31 @@ class InboundShipments(MWS):
                 'InboundShipmentPlanRequestItems.member.1.ASIN' : ASIN
             }
         return self.make_request(data, "POST")
+<<<<<<< HEAD
+=======
+
+    def create_inbound_shipment(self, shipmentId,
+                                name,  addressLine1, city,
+                                state, zipCode, country, fulfillmentCenterId, labelType,
+                                sellerSKU, quantityShipped):
+        data = {'Action': 'CreateInboundShipment',
+            'ShipmentId': shipmentId,
+            'InboundShipmentHeader.DestinationFulfillmentCenterId': fulfillmentCenterId,
+            'InboundShipmentHeader.ShipmentStatus': 'WORKING',
+            'InboundShipmentHeader.LabelPrepPreference': labelType,
+            'InboundShipmentHeader.ShipmentName': 'test',
+            'InboundShipmentHeader.ShipFromAddress.Name': name,
+            'InboundShipmentHeader.ShipFromAddress.AddressLine1': addressLine1,
+       #     'InboundShipmentHeader.ShipFromAddress.AddressLine2' = addressLine2,
+            'InboundShipmentHeader.ShipFromAddress.City': city,
+            'InboundShipmentHeader.ShipFromAddress.StateOrProvinceCode': state,
+            'InboundShipmentHeader.ShipFromAddress.PostalCode': zipCode,
+            'InboundShipmentHeader.ShipFromAddress.CountryCode': country,
+            'InboundShipmentItems.member.1.SellerSKU': sellerSKU,
+            'InboundShipmentItems.member.1.QuantityShipped': quantityShipped
+        }
+        return self.make_request(data, "POST")
+>>>>>>> a0b37c603cfb929e323742efaddb49f847bb9d11
         
 
 class Inventory(MWS):
