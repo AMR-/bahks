@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 import models
 import forms
 import ups
-#from PIL import Image
+from PIL import Image
 
 def index(request):
     return render(request, 'index.html')
@@ -57,7 +57,7 @@ def send(request):
                     "9198891172", "Bill Mandy", "399 Smith Street", "Brooklyn", "NY", "US", "11231", "9198891172",
                     ".1", ".1", ".1", ".1")
         ups.save_label(shipment)
-        return render(request, 'done_sending.html')
+        return redirect('/image')
     else:
         return render(request, 'send.html')
 
@@ -79,8 +79,9 @@ def retrieve(request, boxId):
     return redirect('/storage')
 
 def serveImage(request):
+    im = Image.open("/tmp/label.gif")
     response = HttpResponse(mimetype="image/gif")
-    image.save(response, "GIF")
+    im.save(response, "GIF")
     return response
 
 def pricing(request):
