@@ -4,3 +4,4 @@
 venv
 credentials.py
 .DS_store
+*.out
