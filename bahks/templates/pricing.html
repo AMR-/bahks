@@ -3,8 +3,14 @@
 {% block navbar %}
 <li><a href="/">Home</a></li>
 <li class="active"><a href="pricing">Pricing</a></li>
+{% if user.is_authenticated %}
+<li><a href="storage">Storage</a></li>
+<li><a href="account">Account</a></li>
+<li><a href="logout">Log out</a></li>
+{% else %}
 <li><a href="signup">Sign Up</a></li>
 <li><a href="login">Log In</a></li>
+{% endif %}
 {% endblock %}	
 
 {% block content %}	

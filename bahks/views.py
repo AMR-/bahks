@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.db import models
 from django.contrib.auth.models import User
 import models
@@ -46,6 +46,10 @@ def loginView(request):
     else:
         form = forms.LoginForm()
         return render(request, 'login.html', {'form': form})
+
+def logoutView(request):
+    logout(request)
+    return redirect('/')
 
 def send(request):
     if request.method == 'POST':
